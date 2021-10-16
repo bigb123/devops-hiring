@@ -10,7 +10,6 @@ Grab a coffee, kick back, relax and have a look at a big picture.
 
 ![AWS graph](spoton_diagram.drawio.svg)
 
-
 ## Junior section
 
 - Dockerized via Dockerfile
@@ -36,14 +35,14 @@ Grab a coffee, kick back, relax and have a look at a big picture.
 ## Mid section
 
 - 12 factor app:
-  - IV. Backing services - keep the DB out of the container
-  - X. Dev/prod parity - keep the envs' DBs as similar as possible (it's actually possible in some limited range)
+  - IV. Backing services - I'm keeping the DB out of the container
+  - X. Dev/prod parity - keep the DBs as similar as possible - we can use AWS Migration Service for that
   - XI. Logs - stream logs from container to CloudWatch (probably done by default by EKS but worth to check)
   - III. Config - SECRET_KEY is an env var that sits in kube pod
 
 ## Senior section
 
-- Local development process: 
+- Local development process:
   1. Make sure you have python 3 installed
   1. Develop the app in your IDE
   1. Run the app
@@ -58,6 +57,14 @@ Grab a coffee, kick back, relax and have a look at a big picture.
 
 ## Extras
 
-- http server answers with current date and time by default
-- terraform is here
+- terraform script is available in `main.tf`
+- http server answers with current date and time by default. I've:
+  - added `landing_page` folder using `./manage.py startapp landing_page` command
+  - added piece of code that shows current date and time to `landing_page/views.py`
+  - tweaked `mysite/urls.py` to include `landing_page.urls` path and route the user to that address when the path url string is empty
 
+## Things that will be worth to do if moving to production
+
+- terraform script lacks proper VPC, RDS and ECR definition so that would have to be added
+- GIthub Actions configuration to deploy Terraform and kubernetes manifests
+- Cloudformation for S3 bucket to keep the Terraform statefile there and DynamoDB to keep the tfstate file lock
