@@ -32,6 +32,17 @@ Grab a coffee, kick back, relax and have a look at a big picture.
   kubectl autoscale deployment django-prod --cpu-percent=50 --min=1 --max=10
   ```
 
+- Local development process:
+  1. Make sure you have python 3 installed
+  1. Develop the app in your IDE
+  1. Run the app
+- Running the application:
+  - Install dependencies with `pip3 install -r requirements.txt`
+  - Run the app with `./manage.py runserver` or `python3 ./manage.py runserver`
+  - Web app is accessible at http://127.0.0.1:8000/
+
+    (skipping the part of describing how to set up minikube because I've never done that - I usually go straight to the cloud).
+
 ## Mid section
 
 - 12 factor app:
@@ -42,18 +53,7 @@ Grab a coffee, kick back, relax and have a look at a big picture.
 
 ## Senior section
 
-- Local development process:
-  1. Make sure you have python 3 installed
-  1. Develop the app in your IDE
-  1. Run the app
-- Running the application:
-  - Install dependencies with `pip3 install -r requirements.txt`
-  - Run the app with `./manage.py runserver` or `python3 ./manage.py runserver`
-  - Web app is accessible at http://127.0.0.1:8000/
-
-    (no, I'm not gonna describe how to set up minikube because I've never done that - I usually go straight to the cloud).
-
-- AWS diagram is on the top
+- AWS diagram is on the top. It has some notes to discuss.
 
 ## Extras
 
