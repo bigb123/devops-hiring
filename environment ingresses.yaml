@@ -1,21 +1,4 @@
 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: main-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  tls:
-  - hosts:
-    - staging.spoton.com
-    secretName: tls-secret
-  rules:
-  - host: staging.spoton.com
-
-
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

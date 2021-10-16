@@ -4,18 +4,32 @@
 
 This is not a working project. It is suppose to present how will I solve the given problem rather than make it running.
 
+## The AWS architectural graph
+
+Grab a coffee, kick back, relax and have a look for a big picture.
+
+![AWS graph](spoton_diagram.drawio.svg)
+
+
 ## Junior section
 
 - Dockerized via Dockerfile
 - Kube manifests:
 
+  - I've created a namespace per each environment (DEV, QA, PREPROD, PROD) - namespaces.yaml file
+  - The file "nlb ingress.yaml" keeps Network Load Balancer ingress definition for DEV/QA/PREPROD. It comes from [AWS Blog](https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/) so probably not worth to dive into it as I didn't tweak anything there. 
+  - In "django app deploy.yaml" are pods definitions
+  - "environment ingresses.yaml" ingress definition per environment.
+
   ```
   kubectl create -f ./namespaces.yaml
-  kubectl apply -f './deploy mandatory kubernetes components.yaml' # Suggest to not read it as it is ready solution from the internet
+  kubectl apply -f './nlb ingress.yaml' 
   kubectl apply -f './django app deploy.yaml'
-  kubectl apply -f ./ingress.yaml
+  kubectl apply -f './environment ingresses.yaml'
+  ```
 
   For Horizontal pod autoscaling:
+  ```
   kubectl autoscale deployment django-prod --cpu-percent=50 --min=1 --max=10
   ```
 
@@ -38,13 +52,12 @@ This is not a working project. It is suppose to present how will I solve the giv
   - Run the app with `./manage.py runserver` or `python3 ./manage.py runserver`
   - Web app is accessible at http://127.0.0.1:8000/
 
-    (no, I'm not gonna describe how to set up minikube because I've never done that - I was going straight to the cloud).
+    (no, I'm not gonna describe how to set up minikube because I've never done that - I usually go straight to the cloud).
 
-- AWS diagram is on the bottom
+- AWS diagram is on the top
 
 ## Extras
 
 - http server answers with current date and time by default
 - terraform is here
 
-![AWS graph](spoton_diagram.drawio.svg)
