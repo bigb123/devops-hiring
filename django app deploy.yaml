@@ -1,0 +1,120 @@
+# This mostly comes from https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/ 
+# but it's tweaked for our needs
+
+#
+# DEV
+#
+kind: Pod
+apiVersion: v1
+metadata:
+  name: django-dev-app
+  namespace: dev
+  labels:
+    app: django-dev
+spec:
+  containers:
+    - name: django-dev-app
+      image: the/image/that/comes/from_our_ECR
+      env:
+      - name: DJANGO_SECRET_KEY
+        value: "d93$4&^x&443bf6yu%!_gur^sk%48ac!&^!##vh!dqi*u(d(ep" # in the perfect world that would be a masked env var in CI tool
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: django-dev-service
+spec:
+  selector:
+    app: django-dev
+  ports:
+    - port: 8000 # Default port for our django app	
+
+---
+
+#
+# QA
+#
+kind: Pod
+apiVersion: v1
+metadata:
+  name: django-qa-app
+  namespace: qa
+  labels:
+    app: django-qa
+spec:
+  containers:
+    - name: django-qa-app
+      image: the/image/that/comes/from_our_ECR
+      env:
+      - name: DJANGO_SECRET_KEY
+        value: "<probably another value than in dev>"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: django-qa-service
+spec:
+  selector:
+    app: django-qa
+  ports:
+    - port: 8000 # Default port for our django app	
+
+---
+
+#
+# PREPROD
+#
+kind: Pod
+apiVersion: v1
+metadata:
+  name: django-preprod-app
+  namespace: preprod
+  labels:
+    app: django-preprod
+spec:
+  containers:
+    - name: django-preprod-app
+      image: the/image/that/comes/from_our_ECR
+      env:
+      - name: DJANGO_SECRET_KEY
+        value: "<probably another value than in dev>"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: django-preprod-service
+spec:
+  selector:
+    app: django-preprod
+  ports:
+    - port: 8000 # Default port for our django app	
+
+---
+
+#
+# PROD
+#
+kind: Pod
+apiVersion: v1
+metadata:
+  name: django-prod-app
+  namespace: prod
+  labels:
+    app: django-prod
+spec:
+  containers:
+    - name: django-prod-app
+      image: the/image/that/comes/from_our_ECR
+      env:
+      - name: DJANGO_SECRET_KEY
+        value: "<probably another value than in dev>"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: django-prod-service
+spec:
+  selector:
+    app: django-prod
+  ports:
+    - port: 8000 # Default port for our django app	
