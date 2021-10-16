@@ -6,7 +6,7 @@ This is not a working project. It is suppose to present how will I solve the giv
 
 ## The AWS architectural graph
 
-Grab a coffee, kick back, relax and have a look for a big picture.
+Grab a coffee, kick back, relax and have a look at a big picture.
 
 ![AWS graph](spoton_diagram.drawio.svg)
 
