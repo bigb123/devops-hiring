@@ -17,7 +17,18 @@ spec:
       image: the/image/that/comes/from_our_ECR
       env:
       - name: DJANGO_SECRET_KEY
-        value: "d93$4&^x&443bf6yu%!_gur^sk%48ac!&^!##vh!dqi*u(d(ep" # in the perfect world that would be a masked env var in CI tool
+        value: {{ .Values.DJANGO_SECRET_KEY }}
+      - name: DB_NAME
+        value: {{ .Values.DB_NAME }}
+      - name: DB_USER
+        value: {{ .Values.DB_USER }}
+      # We should replace password auth with cert-based or private ssh key auth
+      - name: DB_PASS
+        value: {{ .Values.DB_PASS }}
+      - name: DB_HOST
+        value: {{ .Values.DB_HOST }}
+      - name: DB_PORT
+        value: {{ .Values.DB_PORT }}
 ---
 kind: Service
 apiVersion: v1

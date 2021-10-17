@@ -13,18 +13,16 @@ Grab a coffee, kick back, relax and have a look at a big picture.
 ## Junior section
 
 - Dockerized via Dockerfile
-- Kube manifests:
+- Kube manifests are located in `django-app-chart/templates` in the form of Helm 3 chart:
 
   - I've created a namespace per each environment (DEV, QA, PREPROD, PROD) - namespaces.yaml file
   - The file "nlb ingress.yaml" keeps Network Load Balancer ingress definition for DEV/QA/PREPROD. It comes from [AWS Blog](https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/) so probably not worth to dive into it as I didn't tweak anything there. 
   - In "django app deploy.yaml" are pods definitions
   - "environment ingresses.yaml" ingress definition per environment.
-
+  
+  Example deployment:
   ```
-  kubectl create -f ./namespaces.yaml
-  kubectl apply -f './nlb ingress.yaml' 
-  kubectl apply -f './django app deploy.yaml'
-  kubectl apply -f './environment ingresses.yaml'
+  helm install --set DJANGO_SECRET_KEY=secret,DB_NAME=db_name,DB_USER=db_user,DB_PASS=db_pass,DB_HOST=db_host,DB_PORT=db_port django-app-chart ./django-app-chart
   ```
 
   For Horizontal pod autoscaling:
